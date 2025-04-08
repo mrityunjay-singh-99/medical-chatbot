@@ -1,6 +1,7 @@
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
+#from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 
 #Extract Data From the PDF File
@@ -24,6 +25,16 @@ def text_split(extracted_data):
 
 
 #Download the Embeddings from HuggingFace 
-def download_hugging_face_embeddings():
-    embeddings=HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')  #this model return 384 dimensions
+# def download_hugging_face_embeddings():
+#     embeddings=HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')  #this model return 384 dimensions
+#     return embeddings
+
+
+
+
+def download_gemni_ai_embeddings():
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     return embeddings
+
+
+#embeddings.embed_query("What's our Q1 revenue?")

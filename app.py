@@ -1,7 +1,9 @@
 from flask import Flask, render_template, jsonify, request
-from source.creater import download_hugging_face_embeddings
+from source.creater import download_gemni_ai_embeddings
 from langchain_pinecone import PineconeVectorStore
-from langchain_openai import OpenAI
+#from langchain_openai import OpenAI
+#from langchain_community.chat_models import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
@@ -14,12 +16,12 @@ app = Flask(__name__)
 load_dotenv()
 
 PINECONE_API_KEY=os.environ.get('PINECONE_API_KEY')
-OPENAI_API_KEY=os.environ.get('OPENAI_API_KEY')
+GOOGLE_API_KEY=os.environ.get('GOOGLE_API_KEY')
 
 os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 
-embeddings = download_hugging_face_embeddings()
+embeddings = download_gemni_ai_embeddings()
 
 
 index_name = "medicalbot"
@@ -33,7 +35,14 @@ docsearch = PineconeVectorStore.from_existing_index(
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k":3})
 
 
-llm = OpenAI(temperature=0.4, max_tokens=500)
+#llm = OpenAI(temperature=0.4, max_tokens=500)
+
+
+llm = ChatGoogleGenerativeAI(
+    model="gemini-pro",
+    temperature=0.4,
+    max_tokens=500,
+)
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
