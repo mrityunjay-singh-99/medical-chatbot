@@ -29,7 +29,7 @@ pip install -r requirements.txt
 
 ```ini
 PINECONE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-OPENAI_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+GOOGLE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 
@@ -91,7 +91,8 @@ open up localhost:
 
 	
 ## 3. Create ECR repo to store/save docker image
-    - Save the URI: 381492224801.dkr.ecr.ap-south-1.amazonaws.com/medical-chatbot
+    - Save the URI: 381492224801.dkr.ecr.eu-north-1.amazonaws.com/medicalchatbot
+	
 
 	
 ## 4. Create EC2 machine (Ubuntu) 
