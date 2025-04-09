@@ -1,8 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from source.creater import download_gemni_ai_embeddings
 from langchain_pinecone import PineconeVectorStore
-#from langchain_openai import OpenAI
-#from langchain_community.chat_models import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -35,11 +33,8 @@ docsearch = PineconeVectorStore.from_existing_index(
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k":3})
 
 
-#llm = OpenAI(temperature=0.4, max_tokens=500)
-
-
 llm = ChatGoogleGenerativeAI(
-    model="gemini-pro",
+    model="gemini-1.5-pro",
     temperature=0.4,
     max_tokens=500,
 )
